@@ -24,6 +24,7 @@ exports.new = function (req, res) {
     order.meals = req.body.meals;
     order.totalCost = req.body.totalCost;
     order.address = req.body.address;
+    order.location = req.body.address;
     order.save(function (err) {
         // if (err)
         //     res.json(err);

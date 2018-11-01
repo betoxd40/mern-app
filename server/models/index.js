@@ -15,6 +15,10 @@ var orderSchema = mongoose.Schema({
     totalCost: Number,
     email: String,
     address: String,
+    location: {
+        lat: String,
+        lng: String,
+    }
 });
 
 var Order = module.exports = mongoose.model('order', orderSchema);
