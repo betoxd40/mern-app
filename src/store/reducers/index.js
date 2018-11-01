@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import OrderReducer from './order';
+import ModalReducer from './modal';
 
 const rootReducer = combineReducers( {
-    user: OrderReducer,
+    order: OrderReducer,
+    modal: ModalReducer,
 } );
 
 export default rootReducer;

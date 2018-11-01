@@ -2,7 +2,9 @@
 const CHANGE_HANDLER = 'CHANGE_HANDLER';
 
 const initialState = {
-    personalInfo: null,
+    name: '',
+    lastName: '',
+    number: '',
     meals: [],
     totalCost: 0,
     email: '',
