@@ -1,4 +1,4 @@
-var orderController = require('../controllers');
+var orderController = require('../controllers/index');
 
 let router = require('express').Router();
 

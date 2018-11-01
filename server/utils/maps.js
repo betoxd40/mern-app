@@ -1,6 +1,5 @@
 var axios = require('axios');
 
-
 class MapClient {
     constructor() {
         this.axios = axios;

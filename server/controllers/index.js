@@ -1,4 +1,4 @@
-Order = require('../models');
+Order = require('../models/index');
 
 // Handle index actions
 exports.index = function (req, res) {

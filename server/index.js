@@ -1,9 +1,9 @@
 // FileName: index.js
 // Import express
 let express = require('express');
-let apiRoutes = require("./routes");
+let apiRoutes = require("./routes/index");
 let bodyParser = require('body-parser');
-let db = require('./database');
+let db = require('./database/index');
 
 // Initialize the app
 let app = express();
