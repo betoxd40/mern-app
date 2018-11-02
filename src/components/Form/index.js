@@ -9,7 +9,6 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import './styles.css';
 import {
     geocodeByAddress,
-    geocodeByPlaceId,
     getLatLng,
 } from 'react-places-autocomplete';
 import { connect } from 'react-redux';
@@ -23,7 +22,6 @@ import {
 
 class Form extends React.Component {
     state = {
-        addressTest : '',
         nameRequired : false,
         lastNameRequired : false,
         numberRequired : false,
@@ -31,12 +29,9 @@ class Form extends React.Component {
         addressRequired : false,
         showNoSelectedCheckboxError : false,
     };
-    handleChange = address => {
-        this.setState({ addressTest: address });
-    };
 
     handleSelect = address => {
-        this.setState({ addressTest: address });
+        this.props.actions.changeAddress(address);
         geocodeByAddress(address)
             .then(results => getLatLng(results[0]))
             .then(latLng => this.props.actions.changeLocation(latLng))
@@ -159,8 +154,8 @@ class Form extends React.Component {
                     </Grid>
                     <Grid item xs={12}>
                         <PlacesAutocomplete
-                            value={this.state.addressTest}
-                            onChange={this.handleChange}
+                            value={address}
+                            onChange={ address => this.props.actions.changeAddress(address)}
                             onSelect={this.handleSelect}
                         >
                             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
