@@ -4,8 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Button from '@material-ui/core/Button';
 import PlacesAutocomplete from 'react-places-autocomplete';
-import styles from './styles.css';
+import './styles.css';
 import {
     geocodeByAddress,
     geocodeByPlaceId,
@@ -13,11 +14,22 @@ import {
 } from 'react-places-autocomplete';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { handleChange, handleCheckbox, changeAddress } from "../../store/reducers/order";
+import {
+    handleChange,
+    handleCheckbox,
+    changeAddress,
+    changeTotal,
+    changeLocation } from "../../store/reducers/order";
 
 class Form extends React.Component {
     state = {
         addressTest : '',
+        nameRequired : false,
+        lastNameRequired : false,
+        numberRequired : false,
+        emailRequired : false,
+        addressRequired : false,
+        showNoSelectedCheckboxError : false,
     };
     handleChange = address => {
         this.setState({ addressTest: address });
@@ -27,8 +39,50 @@ class Form extends React.Component {
         this.setState({ addressTest: address });
         geocodeByAddress(address)
             .then(results => getLatLng(results[0]))
-            .then(latLng => console.log('Success', latLng))
+            .then(latLng => this.props.actions.changeLocation(latLng))
             .catch(error => console.error('Error', error));
+    };
+
+    handleCheckboxChange = (index, price, checked) => {
+        this.props.actions.handleCheckbox(index);
+        if(checked) {
+            this.props.actions.changeTotal(-price);
+        } else {
+            this.props.actions.changeTotal(price);
+        }
+    };
+
+    checkRequired = () => {
+        if ( this.props.name === '' ) {
+            this.setState({ nameRequired: true })
+        } else {
+            this.setState({ nameRequired: false })
+        };
+        if ( this.props.lastName === '' ) {
+            this.setState({ lastNameRequired: true })
+        } else {
+            this.setState({ lastNameRequired: false })
+        };
+        if ( this.props.number === '' ) {
+            this.setState({ numberRequired: true })
+        } else {
+            this.setState({ numberRequired: false })
+        };
+        if ( this.props.email === '' ) {
+            this.setState({ emailRequired: true })
+        } else {
+            this.setState({ emailRequired: false })
+        };
+        if ( this.props.address === '' ) {
+            this.setState({ addressRequired: true })
+        } else {
+            this.setState({ addressRequired: false })
+        };
+        if ( this.props.totalCost === 0 ) {
+            this.setState({ showNoSelectedCheckboxError: true })
+        } else {
+            this.setState({ showNoSelectedCheckboxError: false })
+        };
     };
 
     render() {
@@ -37,9 +91,9 @@ class Form extends React.Component {
                 <Grid item xs={6}>
                     <FormControlLabel
                         control={
-                            <Checkbox checked={meal.checked} onChange={() => this.props.actions.handleCheckbox(i)} value={meal.name} />
+                            <Checkbox checked={meal.checked} onChange={() => this.handleCheckboxChange(i, meal.price, meal.checked)} value={meal.name} />
                         }
-                        label={`Name: ${meal.name} Price: ${meal.price}`}
+                        label={`Name: ${meal.name} - Price: ${meal.price} $`}
                     />
                 </Grid>
             );
@@ -63,15 +117,19 @@ class Form extends React.Component {
                     </Grid>
                     <Grid item xs={12}>
                         <Input
+                            error={this.state.nameRequired}
                             id="name"
                             placeholder="Name"
                             value={name}
                             fullWidth={true}
+                            required
                             onChange= { event => this.props.actions.handleChange( { name: 'name', value: event.target.value, } ) }
                         />
+                        {}
                     </Grid>
                     <Grid item xs={12}>
                         <Input
+                            error={this.state.lastNameRequired}
                             id="lastName"
                             placeholder="Last Name"
                             value={lastName}
@@ -81,6 +139,7 @@ class Form extends React.Component {
                     </Grid>
                     <Grid item xs={12}>
                         <Input
+                            error={this.state.numberRequired}
                             id="number"
                             placeholder="Number"
                             value={number}
@@ -90,6 +149,7 @@ class Form extends React.Component {
                     </Grid>
                     <Grid item xs={12}>
                         <Input
+                            error={this.state.emailRequired}
                             id="email"
                             placeholder="Email"
                             value={email}
@@ -110,9 +170,10 @@ class Form extends React.Component {
                                             placeholder: 'Address ...',
                                             className: 'location-search-input',
                                         })}
+                                        error={this.state.addressRequired}
                                         fullWidth={true}
                                     />
-                                    <div className={styles.dropdown}>
+                                    <div>
                                         {loading && <div>Loading...</div>}
                                         {suggestions.map(suggestion => {
                                             const className = suggestion.active
@@ -127,7 +188,7 @@ class Form extends React.Component {
                                                     {...getSuggestionItemProps(suggestion, {
                                                         style,
                                                     })}
-                                                    className={styles.dropdown}
+                                                    className={'dropdown'}
                                                 >
                                                     <span>{suggestion.description}</span>
                                                 </div>
@@ -149,6 +210,17 @@ class Form extends React.Component {
                 <Grid container spacing={32}>
                     <Grid item xs={12}>
                         <h3>TOTAL: {totalCost}</h3>
+                        {this.state.showNoSelectedCheckboxError &&
+                        <span className={'error-text'}>
+                            Please select some delight from our menu
+                        </span>}
+                    </Grid>
+                </Grid>
+                <Grid container spacing={32}>
+                    <Grid item xs={12}>
+                        <Button variant="contained" color="primary" onClick={this.checkRequired}>
+                            Submit
+                        </Button>
                     </Grid>
                 </Grid>
             </form>
@@ -176,6 +248,8 @@ function mapDispatchToProps(dispatch) {
             handleChange,
             handleCheckbox,
             changeAddress,
+            changeTotal,
+            changeLocation,
         }, dispatch)
     };
 }

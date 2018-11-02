@@ -2,6 +2,8 @@
 const CHANGE_HANDLER = 'CHANGE_HANDLER';
 const CHANGE_CHECKHBOX = 'CHANGE_CHECKHBOX';
 const CHANGE_ADDRESS = 'CHANGE_ADDRESS';
+const CHANGE_TOTAL = 'CHANGE_TOTAL';
+const CHANGE_LOCATION = 'CHANGE_LOCATION';
 
 const initialState = {
     name: '',
@@ -14,8 +16,23 @@ const initialState = {
     location: null,
     dummyMeals: [
         {
-            name: 'item',
-            price: 100,
+            name: 'Meat in the shape of chihuahua with oyster sauce',
+            price: 78,
+            checked: false,
+        },
+        {
+            name: 'Lamb alive burned at the moment',
+            price: 120,
+            checked: false,
+        },
+        {
+            name: 'Face',
+            price: 200,
+            checked: false,
+        },
+        {
+            name: 'Surprise dish',
+            price: 99,
             checked: false,
         },
         {
@@ -24,33 +41,18 @@ const initialState = {
             checked: false,
         },
         {
-            name: 'item',
+            name: 'Salad with expired eggplant',
             price: 100,
             checked: false,
         },
         {
-            name: 'item',
-            price: 100,
+            name: 'Pigeon Cake',
+            price: 70,
             checked: false,
         },
         {
-            name: 'item',
-            price: 100,
-            checked: false,
-        },
-        {
-            name: 'item',
-            price: 100,
-            checked: false,
-        },
-        {
-            name: 'item',
-            price: 100,
-            checked: false,
-        },
-        {
-            name: 'item',
-            price: 100,
+            name: 'Donation jeje',
+            price: 500,
             checked: false,
         }
     ],
@@ -61,8 +63,14 @@ export default function reducer( state = initialState, action = {} ) {
         case CHANGE_HANDLER: {
             return { ...state, [action.payload.name]: action.payload.value,  };
         }
+        case CHANGE_LOCATION: {
+            return { ...state, location: action.payload,  };
+        }
         case CHANGE_ADDRESS: {
-            return { ...state, [initialState.address]: action.payload,  };
+            return { ...state, address: action.payload,  };
+        }
+        case CHANGE_TOTAL: {
+            return { ...state, totalCost: state.totalCost + action.payload,  };
         }
         case CHANGE_CHECKHBOX: {
             return {
@@ -94,5 +102,17 @@ export function changeAddress( address ) {
     return {
         type: CHANGE_ADDRESS,
         payload: address,
+    };
+}
+export function changeLocation( location ) {
+    return {
+        type: CHANGE_LOCATION,
+        payload: location,
+    };
+}
+export function changeTotal( price ) {
+    return {
+        type: CHANGE_TOTAL,
+        payload: price,
     };
 }
