@@ -8,7 +8,7 @@ import Form from "../Form";
 const stylesMaterial = theme => ({
     paper: {
         position: 'absolute',
-        width: theme.spacing.unit * 50,
+        width: '60%',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
         padding: theme.spacing.unit * 4,
@@ -31,7 +31,8 @@ class OrdenModal extends React.Component {
         return (
             <Modal
                 open={this.props.show}
-                onClose={this.props.handleClose}>
+                onClose={this.props.handleClose}
+                className={styles.modal}>
                 <div className={classes.paper}>
                     <Form />
                 </div>

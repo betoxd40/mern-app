@@ -4,10 +4,19 @@ import OrdenModal from '../OrdenModal'
 import { connect } from 'react-redux';
 import { handleModal } from "../../store/reducers/modal";
 import { bindActionCreators } from 'redux';
+import loadScript from "../../utils/loadGoogleMapsScript";
 
 class CreationOrder extends React.Component {
     state = {};
-
+    componentDidMount() {
+        // first load the script into html
+        loadScript().then(function() {
+            console.log('SUCCESS');
+            // Where do I go from here?
+        }).catch(e => {
+            console.log(e);
+        });
+    }
     render() {
         return (
             <div>
