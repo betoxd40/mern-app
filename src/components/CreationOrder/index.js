@@ -5,21 +5,20 @@ import { connect } from 'react-redux';
 import { handleModal } from "../../store/reducers/modal";
 import { bindActionCreators } from 'redux';
 import loadScript from "../../utils/loadGoogleMapsScript";
+import './styles.css';
 
 class CreationOrder extends React.Component {
-    state = {};
     componentDidMount() {
-        // first load the script into html
-        loadScript().then(function() {
-            console.log('SUCCESS');
-            // Where do I go from here?
+        loadScript().then(() => {
         }).catch(e => {
             console.log(e);
         });
     }
     render() {
         return (
-            <div>
+            <div className={'container-root'}>
+                <h1>Creation order</h1>
+                <h5>Welcome to our new and innovative system to order food.</h5>
                 <Button variant="contained" color="primary" onClick={this.props.actions.handleModal}>
                     Add Order
                 </Button>

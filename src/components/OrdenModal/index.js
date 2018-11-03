@@ -34,7 +34,8 @@ class OrdenModal extends React.Component {
                 onClose={this.props.handleClose}
                 className={styles.modal}>
                 <div className={classes.paper}>
-                    <Form />
+                    <Form
+                        handleClose={this.props.handleClose}/>
                 </div>
             </Modal>
         )

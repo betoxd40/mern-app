@@ -4,7 +4,7 @@ var orderSchema = mongoose.Schema({
     personalInfo: {
         name: String,
         lastName: String,
-        number: Number,
+        number: String,
     },
     meals : [
         {

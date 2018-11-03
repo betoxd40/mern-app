@@ -9,9 +9,6 @@ class App extends Component {
             <div>
                 <Grid container>
                     <Grid item xs={12} className={'center'}>
-                        <h1>Creation order</h1>
-                    </Grid>
-                    <Grid item xs={12} className={'center'}>
                         <CreationOrder />
                     </Grid>
                 </Grid>

@@ -11,3 +11,11 @@
 .error-text {
     color: red;
 }
+
+.btn-secondary {
+    margin-left: 15px !important;
+}
+
+.loader {
+    margin-left: 15px;
+}

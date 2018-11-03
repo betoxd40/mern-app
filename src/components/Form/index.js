@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import './styles.css';
@@ -18,7 +19,8 @@ import {
     handleCheckbox,
     changeAddress,
     changeTotal,
-    changeLocation } from "../../store/reducers/order";
+    changeLocation } from '../../store/reducers/order';
+import { orderPost, orderFetch } from '../../store/reducers/sagas'
 
 class Form extends React.Component {
     state = {
@@ -47,7 +49,7 @@ class Form extends React.Component {
         }
     };
 
-    checkRequired = () => {
+    showRequired = () => {
         if ( this.props.name === '' ) {
             this.setState({ nameRequired: true })
         } else {
@@ -79,6 +81,15 @@ class Form extends React.Component {
             this.setState({ showNoSelectedCheckboxError: false })
         };
     };
+    checkRequired = () => {
+        return this.props.email !== '' && this.props.name !== '' && this.props.lastName !== '' &&
+            this.props.address !== '' && this.props.number !== '' && this.props.totalCost !== 0;
+
+    };
+    handleSubmit = () => {
+        this.showRequired();
+        if(this.checkRequired()) return this.props.actions.orderPost();
+    };
 
     render() {
         const renderCheckboxes =
@@ -86,7 +97,11 @@ class Form extends React.Component {
                 <Grid item xs={6}>
                     <FormControlLabel
                         control={
-                            <Checkbox checked={meal.checked} onChange={() => this.handleCheckboxChange(i, meal.price, meal.checked)} value={meal.name} />
+                            <Checkbox
+                                key={i}
+                                checked={meal.checked}
+                                onChange={() => this.handleCheckboxChange(i, meal.price, meal.checked)}
+                                value={meal.name} />
                         }
                         label={`Name: ${meal.name} - Price: ${meal.price} $`}
                     />
@@ -97,11 +112,10 @@ class Form extends React.Component {
             name,
             lastName,
             number,
-            meals,
             totalCost,
             email,
             address,
-            location
+            loading,
         } = this.props;
 
         return (
@@ -129,6 +143,7 @@ class Form extends React.Component {
                             placeholder="Last Name"
                             value={lastName}
                             fullWidth={true}
+                            required
                             onChange= { event => this.props.actions.handleChange( { name: 'lastName', value: event.target.value, } ) }
                         />
                     </Grid>
@@ -139,6 +154,7 @@ class Form extends React.Component {
                             placeholder="Number"
                             value={number}
                             fullWidth={true}
+                            required
                             onChange= { event => this.props.actions.handleChange( { name: 'number', value: event.target.value, } ) }
                         />
                     </Grid>
@@ -149,6 +165,7 @@ class Form extends React.Component {
                             placeholder="Email"
                             value={email}
                             fullWidth={true}
+                            required
                             onChange= { event => this.props.actions.handleChange( { name: 'email', value: event.target.value, } ) }
                         />
                     </Grid>
@@ -167,6 +184,7 @@ class Form extends React.Component {
                                         })}
                                         error={this.state.addressRequired}
                                         fullWidth={true}
+                                        required
                                     />
                                     <div>
                                         {loading && <div>Loading...</div>}
@@ -213,9 +231,13 @@ class Form extends React.Component {
                 </Grid>
                 <Grid container spacing={32}>
                     <Grid item xs={12}>
-                        <Button variant="contained" color="primary" onClick={this.checkRequired}>
+                        <Button variant="contained" color="primary" onClick={this.handleSubmit}>
                             Submit
                         </Button>
+                        <Button variant="contained" color="secondary" onClick={this.props.handleClose} className={'btn-secondary'}>
+                            Cancel
+                        </Button>
+                        {loading && <CircularProgress className={'loader'}/>}
                     </Grid>
                 </Grid>
             </form>
@@ -234,6 +256,7 @@ function mapStateToProps(state) {
         address: state.order.address,
         location: state.order.location,
         dummyMeals: state.order.dummyMeals,
+        loading: state.saga.loading,
     };
 }
 
@@ -245,6 +268,8 @@ function mapDispatchToProps(dispatch) {
             changeAddress,
             changeTotal,
             changeLocation,
+            orderFetch,
+            orderPost,
         }, dispatch)
     };
 }

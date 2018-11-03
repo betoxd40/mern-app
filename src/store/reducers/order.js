@@ -116,3 +116,4 @@ export function changeTotal( price ) {
         payload: price,
     };
 }
+
