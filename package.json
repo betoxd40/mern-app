@@ -21,11 +21,12 @@
   },
   "scripts": {
     "start-server": "node server/index",
-    "start": "react-scripts start",
+    "start-client": "react-scripts start",
+    "start": "concurrently --kill-others-on-fail \"yarn start-server\" \"yarn start-client\"",
     "build": "react-scripts build",
-    "test": "react-scripts test --verbose",
-    "eject": "react-scripts eject",
-    "dev": "concurrently --kill-others-on-fail \"yarn start-server\" \"yarn start\""
+    "test-client": "react-scripts test --verbose",
+    "test-server": "mocha server/controllers/**/*.*",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,9 +38,12 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "chai": "^4.2.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "jest": "^23.6.0",
+    "mocha": "^5.2.0",
+    "node-mocks-http": "^1.7.3",
     "redux-mock-store": "^1.5.3",
     "sinon": "^7.1.1"
   }
