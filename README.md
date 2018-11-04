@@ -1,31 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What do you need or have installed before starting the project?
 
+### `mongoDB` 
+### `Google Maps API Key`
+You can put it here -> src/utils/loadGoogleMapsScript.js
+### `Google Matrix API Key` 
+You can put it here -> server/utils/maps.js
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `yarn start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Runs the app in the development mode.<br>
+- Runs the mongo database.<br>
+- Runs the server in the development mode.<br>
+- Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [http://localhost:5000](http://localhost:5000) is the connection for the API.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+### `yarn test-client`
 
-### `npm test`
+Launches the test runner in the interactive watch mode for the client.<br>
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `yarn test-server`
+
+Launches the test runner in the interactive watch mode for the server.<br>
+
+### `yarn start-server`
+
+Runs the server in the development mode.<br>
+
+### `yarn start-client`
+
+Runs the client in the development mode.<br>
+
+### `yarn database-init`
+
+Runs the database.<br>
 
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `npm run eject`
 
@@ -37,8 +51,10 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Installed packages
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- MaterialUI
+- Cors (to test the server without going through the cors)
+- React, Redux, Redux-Saga, PropTypes.
+- react-places-autocomplete, npm package automatically connected to the api of goole maps

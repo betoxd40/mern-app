@@ -22,7 +22,8 @@
   "scripts": {
     "start-server": "node server/index",
     "start-client": "react-scripts start",
-    "start": "concurrently --kill-others-on-fail \"yarn start-server\" \"yarn start-client\"",
+    "database-init": "mongod",
+    "start": "concurrently --kill-others-on-fail \"yarn database-init\" \"yarn start-server\" \"yarn start-client\"",
     "build": "react-scripts build",
     "test-client": "react-scripts test --verbose",
     "test-server": "mocha server/controllers/**/*.*",
