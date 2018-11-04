@@ -19,8 +19,8 @@ import {
     handleCheckbox,
     changeAddress,
     changeTotal,
-    changeLocation } from '../../store/reducers/order';
-import { orderPost, orderFetch } from '../../store/reducers/sagas'
+    changeLocation,
+    handleMeals } from '../../store/reducers/order';
 
 class Form extends React.Component {
     state = {
@@ -40,13 +40,14 @@ class Form extends React.Component {
             .catch(error => console.error('Error', error));
     };
 
-    handleCheckboxChange = (index, price, checked) => {
+    handleCheckboxChange = (index, price, checked, name) => {
         this.props.actions.handleCheckbox(index);
         if(checked) {
             this.props.actions.changeTotal(-price);
         } else {
             this.props.actions.changeTotal(price);
         }
+        this.props.actions.handleMeals({index, price, checked, name});
     };
 
     showRequired = () => {
@@ -86,11 +87,24 @@ class Form extends React.Component {
             this.props.address !== '' && this.props.number !== '' && this.props.totalCost !== 0;
 
     };
+    buildOrder = () => {
+        return {
+            personalInfo: {
+                name: this.props.name,
+                lastName: this.props.lastName,
+                number: this.props.number,
+            },
+            meals: this.props.meals,
+            totalCost: this.props.totalCost,
+            email: this.props.email,
+            address: this.props.address,
+            location: this.props.location,
+        };
+    };
     handleSubmit = () => {
         this.showRequired();
-        if(this.checkRequired()) return this.props.actions.orderPost();
+        if(this.checkRequired()) return this.props.orderPost(this.buildOrder());
     };
-
     render() {
         const renderCheckboxes =
             this.props.dummyMeals.map( (meal, i) =>
@@ -100,7 +114,7 @@ class Form extends React.Component {
                             <Checkbox
                                 key={i}
                                 checked={meal.checked}
-                                onChange={() => this.handleCheckboxChange(i, meal.price, meal.checked)}
+                                onChange={() => this.handleCheckboxChange(i, meal.price, meal.checked, meal.name)}
                                 value={meal.name} />
                         }
                         label={`Name: ${meal.name} - Price: ${meal.price} $`}
@@ -231,10 +245,10 @@ class Form extends React.Component {
                 </Grid>
                 <Grid container spacing={32}>
                     <Grid item xs={12}>
-                        <Button variant="contained" color="primary" onClick={this.handleSubmit}>
+                        <Button variant="contained" color="primary" onClick={this.handleSubmit} disabled={loading}>
                             Submit
                         </Button>
-                        <Button variant="contained" color="secondary" onClick={this.props.handleClose} className={'btn-secondary'}>
+                        <Button variant="contained" color="secondary" onClick={this.props.handleClose} disabled={loading} className={'btn-secondary'}>
                             Cancel
                         </Button>
                         {loading && <CircularProgress className={'loader'}/>}
@@ -257,6 +271,7 @@ function mapStateToProps(state) {
         location: state.order.location,
         dummyMeals: state.order.dummyMeals,
         loading: state.saga.loading,
+        eta: state.saga.eta,
     };
 }
 
@@ -268,9 +283,9 @@ function mapDispatchToProps(dispatch) {
             changeAddress,
             changeTotal,
             changeLocation,
-            orderFetch,
-            orderPost,
-        }, dispatch)
+            handleMeals,
+        }, dispatch),
+        orderPost: (order) => dispatch({ type: "ORDER_POST_REQUESTED", payload: order })
     };
 }
 

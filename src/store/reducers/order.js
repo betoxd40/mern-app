@@ -1,9 +1,10 @@
 // Actions
 const CHANGE_HANDLER = 'CHANGE_HANDLER';
-const CHANGE_CHECKHBOX = 'CHANGE_CHECKHBOX';
+const CHANGE_CHECKBOX = 'CHANGE_CHECKBOX';
 const CHANGE_ADDRESS = 'CHANGE_ADDRESS';
 const CHANGE_TOTAL = 'CHANGE_TOTAL';
 const CHANGE_LOCATION = 'CHANGE_LOCATION';
+const CHANGE_MEALS = 'CHANGE_MEALS';
 
 const initialState = {
     name: '',
@@ -72,7 +73,13 @@ export default function reducer( state = initialState, action = {} ) {
         case CHANGE_TOTAL: {
             return { ...state, totalCost: state.totalCost + action.payload,  };
         }
-        case CHANGE_CHECKHBOX: {
+        case CHANGE_MEALS: {
+            if(!action.payload.checked) {
+                return { ...state, meals: [...state.meals, {name: action.payload.name, price: action.payload.price}]  };
+            }
+            return { ...state, meals: state.meals.filter(meal => meal.name !== action.payload.name)  };
+        }
+        case CHANGE_CHECKBOX: {
             return {
                 ...state,
                 dummyMeals: state.dummyMeals.map(
@@ -94,8 +101,14 @@ export function handleChange( change ) {
 }
 export function handleCheckbox( index ) {
     return {
-        type: CHANGE_CHECKHBOX,
+        type: CHANGE_CHECKBOX,
         payload: index,
+    };
+}
+export function handleMeals( meal ) {
+    return {
+        type: CHANGE_MEALS,
+        payload: meal,
     };
 }
 export function changeAddress( address ) {

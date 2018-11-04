@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { handleModal } from "../../store/reducers/modal";
 import { bindActionCreators } from 'redux';
 import loadScript from "../../utils/loadGoogleMapsScript";
+import SuccessMessage from '../SuccessMessage';
 import './styles.css';
 
 class CreationOrder extends React.Component {
@@ -15,6 +16,8 @@ class CreationOrder extends React.Component {
         });
     }
     render() {
+        const message = 'Your order has been successfully registered, if it does not arrive in less than 40 minutes, ' +
+            'Omar will pay for your order. Arrival time: ' + this.props.eta;
         return (
             <div className={'container-root'}>
                 <h1>Creation order</h1>
@@ -23,6 +26,9 @@ class CreationOrder extends React.Component {
                     Add Order
                 </Button>
                 <OrdenModal show={this.props.show} handleClose={this.props.actions.handleModal}/>
+                {this.props.eta &&
+                    <SuccessMessage message={message}/>
+                }
             </div>
         )
     }
@@ -32,6 +38,7 @@ class CreationOrder extends React.Component {
 function mapStateToProps(state) {
     return {
         show: state.modal.show,
+        eta: state.saga.eta,
     };
 }
 

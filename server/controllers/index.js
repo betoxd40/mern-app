@@ -19,7 +19,7 @@ exports.index = function (req, res) {
 };
 
 // Handle create order actions
-exports.new = function (req, res) {
+exports.new = async function (req, res) {
     const order = new Order();
     const { personalInfo, meals, totalCost, address, location } = req.body;
     order.personalInfo = personalInfo;
@@ -28,7 +28,8 @@ exports.new = function (req, res) {
     order.address = address;
     order.location = location;
     const destinyDirection = location.lat + ',' + location.lng;
-    const ETA = new MapClient().getETA(destinyDirection);
+    const ETA = await new MapClient().getETA(destinyDirection);
+    console.log(ETA);
     order.save(function (err) {
         if (err) res.json(err);
         if (!ETA) {

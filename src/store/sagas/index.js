@@ -7,23 +7,23 @@ function* fetchOrderSaga() {
         const response = yield call(fetchOrder);
         //response.setHeader('Access-Control-Allow-Origin','localhost:3000');
         console.log(response);
-        yield call(delay, 5000);
+        yield call(delay, 3000);
         yield put({type: "ORDER_FETCH_SUCCEEDED"});
     } catch (e) {
         yield put({type: "ORDER_FETCH_FAILED", message: e.message});
     }
 }
 
-function* postOrderSaga() {
+function* postOrderSaga(action) {
     try {
-        const response = yield call(postOrder);
+        const response = yield call(postOrder, action.payload);
         //response.setHeader('Access-Control-Allow-Origin','localhost:3000');
-        console.log(response);
         yield call(delay, 3000);
-        yield put({type: "ORDER_POST_SUCCEEDED"});
+        yield put({type: "ORDER_POST_SUCCEEDED", payload: response.data.ETA});
+        yield put({type: "OPEN_MODAL"});
     } catch (e) {
         yield call(delay, 3000);
-        yield put({type: "ORDER_POST_FAILED", message: e.message});
+        yield put({type: "ORDER_POST_FAILED", payload: e.message});
     }
 }
 

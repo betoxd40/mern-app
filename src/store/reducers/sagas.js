@@ -9,6 +9,7 @@ const ORDER_POST_FAILED = 'ORDER_POST_FAILED';
 
 const initialState = {
     loading: false,
+    eta: null,
 };
 
 export default function reducer( state = initialState, action = {} ) {
@@ -26,7 +27,7 @@ export default function reducer( state = initialState, action = {} ) {
             return {...state, loading: true}
         }
         case ORDER_POST_SUCCEEDED: {
-            return {...state, loading: false,}
+            return {...state, loading: false, eta: action.payload}
         }
         case ORDER_POST_FAILED: {
             return {...state, loading: false}
@@ -34,15 +35,4 @@ export default function reducer( state = initialState, action = {} ) {
         default:
             return state;
     }
-}
-
-export function orderFetch( ) {
-    return {
-        type: ORDER_FETCH_REQUESTED,
-    };
-}
-export function orderPost( ) {
-    return {
-        type: ORDER_POST_REQUESTED,
-    };
 }
