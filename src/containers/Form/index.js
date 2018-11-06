@@ -138,7 +138,7 @@ class Form extends React.Component {
                     <Grid item xs={12}>
                         <h3>Personal Info</h3>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <Input
                             error={this.state.nameRequired}
                             id="name"
@@ -150,7 +150,7 @@ class Form extends React.Component {
                         />
                         {}
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <Input
                             error={this.state.lastNameRequired}
                             id="lastName"
@@ -161,7 +161,7 @@ class Form extends React.Component {
                             onChange= { event => this.props.actions.handleChange( { name: 'lastName', value: event.target.value, } ) }
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <Input
                             error={this.state.numberRequired}
                             id="number"
@@ -172,7 +172,7 @@ class Form extends React.Component {
                             onChange= { event => this.props.actions.handleChange( { name: 'number', value: event.target.value, } ) }
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <Input
                             error={this.state.emailRequired}
                             id="email"
@@ -203,10 +203,6 @@ class Form extends React.Component {
                                     <div>
                                         {loading && <div>Loading...</div>}
                                         {suggestions.map(suggestion => {
-                                            const className = suggestion.active
-                                                ? 'suggestion-item--active'
-                                                : 'suggestion-item';
-                                            // inline style for demonstration purpose
                                             const style = suggestion.active
                                                 ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                                                 : { backgroundColor: '#ffffff', cursor: 'pointer' };
@@ -236,7 +232,7 @@ class Form extends React.Component {
                 </Grid>
                 <Grid container spacing={32}>
                     <Grid item xs={12}>
-                        <h3>TOTAL: {totalCost}</h3>
+                        <h3>TOTAL: {totalCost} $</h3>
                         {this.state.showNoSelectedCheckboxError &&
                         <span className={'error-text'}>
                             Please select some delight from our menu

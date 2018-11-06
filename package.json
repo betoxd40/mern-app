@@ -7,9 +7,13 @@
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "concurrently": "^4.0.1",
+    "config": "^2.0.1",
     "cors": "^2.8.4",
     "express": "^4.16.4",
+    "helmet": "^3.14.0",
+    "joi": "^14.0.4",
     "mongoose": "^5.3.8",
+    "morgan": "^1.9.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
@@ -24,9 +28,9 @@
     "start-client": "react-scripts start",
     "database-init": "mongod",
     "start": "concurrently --kill-others-on-fail \"yarn database-init\" \"yarn start-server\" \"yarn start-client\"",
-    "build": "react-scripts build",
+    "build": "REACT_APP_API_URL=apiProdUrl react-scripts build",
     "test-client": "react-scripts test --verbose",
-    "test-server": "mocha server/controllers/**/*.*",
+    "test-server": "mocha server/controllers/**/*.* --timeout 10000",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,6 +50,7 @@
     "mocha": "^5.2.0",
     "node-mocks-http": "^1.7.3",
     "redux-mock-store": "^1.5.3",
-    "sinon": "^7.1.1"
+    "sinon": "^7.1.1",
+    "supertest": "^3.3.0"
   }
 }

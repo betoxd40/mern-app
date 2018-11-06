@@ -1,0 +1,9 @@
+{
+    "dbConfig": {
+      "url": "mongodb://localhost:27017/testDatabase",
+      "type": "mongodb",
+      "host": "localhost",
+      "port": 27017,
+      "dbName": "testDatabase"
+    }
+  }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Grid from '@material-ui/core/Grid';
-import CreationOrder from './components/CreationOrder'
+import CreationOrder from './containers/CreationOrder'
 
 class App extends Component {
     render() {

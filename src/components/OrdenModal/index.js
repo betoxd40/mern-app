@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@material-ui/core/Modal';
 import { withStyles } from '@material-ui/core/styles';
-import styles from './styles.css';
-import Form from "../Form";
+import Form from "../../containers/Form";
 
 const stylesMaterial = theme => ({
     paper: {
@@ -11,15 +10,16 @@ const stylesMaterial = theme => ({
         width: '60%',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
-        padding: theme.spacing.unit * 4,
+        padding: theme.spacing.unit * 8,
         top: `50%`,
         left: `50%`,
         transform: `translate(-50%, -50%)`,
+        overflow: 'overlay',
+        height: '85%',
     },
 });
 
 class OrdenModal extends React.Component {
-    state = {};
 
     static propTypes = {
         show: PropTypes.bool.isRequired,
@@ -27,15 +27,17 @@ class OrdenModal extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const {
+            classes,
+            show,
+            handleClose } = this.props;
         return (
             <Modal
-                open={this.props.show}
-                onClose={this.props.handleClose}
-                className={styles.modal}>
+                open={show}
+                onClose={handleClose} >
                 <div className={classes.paper}>
                     <Form
-                        handleClose={this.props.handleClose}/>
+                        handleClose={handleClose}/>
                 </div>
             </Modal>
         )

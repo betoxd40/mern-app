@@ -1,11 +1,11 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import OrdenModal from '../OrdenModal'
+import OrdenModal from '../../components/OrdenModal'
 import { connect } from 'react-redux';
 import { handleModal } from "../../store/reducers/modal";
 import { bindActionCreators } from 'redux';
 import loadScript from "../../utils/loadGoogleMapsScript";
-import SuccessMessage from '../SuccessMessage';
+import SuccessMessage from '../../components/SuccessMessage';
 import './styles.css';
 
 class CreationOrder extends React.Component {

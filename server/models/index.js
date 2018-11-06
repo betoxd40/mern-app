@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var orderSchema = mongoose.Schema({
+const orderSchema = mongoose.Schema({
     personalInfo: {
         name: String,
         lastName: String,
@@ -21,7 +21,7 @@ var orderSchema = mongoose.Schema({
     }
 });
 
-var Order = module.exports = mongoose.model('order', orderSchema);
-module.exports.get = function (callback, limit) {
+const Order = module.exports = mongoose.model('order', orderSchema);
+module.exports.get = (callback, limit) => {
     Order.find(callback).limit(limit);
 };
