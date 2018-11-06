@@ -30,7 +30,12 @@ class Form extends React.Component {
         emailRequired : false,
         addressRequired : false,
         showNoSelectedCheckboxError : false,
+        error: null,
     };
+
+    componentDidCatch(error, info) {
+        this.setState({ error, info });
+    }
 
     handleSelect = address => {
         this.props.actions.changeAddress(address);
@@ -240,6 +245,7 @@ class Form extends React.Component {
                     </Grid>
                 </Grid>
                 <Grid container spacing={32}>
+                    {this.state.error && <span>{this.state.error}</span>}
                     <Grid item xs={12}>
                         <Button variant="contained" color="primary" onClick={this.handleSubmit} disabled={loading}>
                             Submit

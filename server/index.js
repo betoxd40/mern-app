@@ -1,5 +1,3 @@
-// FileName: index.js
-// Import express
 let express = require('express');
 const apiRoutes = require("./routes/index");
 const bodyParser = require('body-parser');

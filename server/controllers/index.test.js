@@ -75,7 +75,7 @@ describe('POST /order', function() {
             .post('/api/order')
             .send(invalidData)
             .set('Accept', 'application/json')
-            .expect(422)
+            .expect(400)
             .end(function(err, res) {
                 if (err) return done(err);
                 done();
