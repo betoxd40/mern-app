@@ -30,6 +30,7 @@ class Form extends React.Component {
         emailRequired : false,
         addressRequired : false,
         showNoSelectedCheckboxError : false,
+        showNoSelectedFromDropdown : false,
         error: null,
     };
 
@@ -86,10 +87,15 @@ class Form extends React.Component {
         } else {
             this.setState({ showNoSelectedCheckboxError: false })
         };
+        if ( this.props.location === null ) {
+            this.setState({ showNoSelectedFromDropdown: true })
+        } else {
+            this.setState({ showNoSelectedFromDropdown: false })
+        };
     };
     checkRequired = () => {
         return this.props.email !== '' && this.props.name !== '' && this.props.lastName !== '' &&
-            this.props.address !== '' && this.props.number !== '' && this.props.totalCost !== 0;
+            this.props.address !== '' && this.props.number !== '' && this.props.totalCost !== 0 && this.props.location !== null;
 
     };
     buildOrder = () => {
@@ -226,6 +232,10 @@ class Form extends React.Component {
                                 </div>
                             )}
                         </PlacesAutocomplete>
+                        {this.state.showNoSelectedFromDropdown &&
+                        <span className={'error-text'}>
+                            Please select your place form the dropdown
+                        </span>}
                     </Grid>
                 </Grid>
                 <Divider />
