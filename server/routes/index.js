@@ -3,7 +3,7 @@ const orderController = require('../controllers/index');
 let router = require('express').Router();
 
 // Order routes
-router.route('/orders')
+router.route('/order')
     .get(orderController.index)
     .post(orderController.new);
 

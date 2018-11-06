@@ -37,17 +37,17 @@ const invalidData = {
     }
 };
 
-describe('GET /orders', function() {
+describe('GET /order', function() {
     it('respond with json', function(done) {
         request(app)
-            .get('/api/orders')
+            .get('/api/order')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200, done);
     });
     it('responds with json', function(done) {
         request(app)
-            .post('/api/orders')
+            .post('/api/order')
             .send(mockData)
             .set('Accept', 'application/json')
             .expect(200)
@@ -58,10 +58,10 @@ describe('GET /orders', function() {
     });
 });
 
-describe('POST /orders', function() {
+describe('POST /order', function() {
     it('responds with json', function(done) {
         request(app)
-            .post('/api/orders')
+            .post('/api/order')
             .send(mockData)
             .set('Accept', 'application/json')
             .expect(200)
@@ -72,7 +72,7 @@ describe('POST /orders', function() {
     });
     it('responds with status 422', function(done) {
         request(app)
-            .post('/api/orders')
+            .post('/api/order')
             .send(invalidData)
             .set('Accept', 'application/json')
             .expect(422)

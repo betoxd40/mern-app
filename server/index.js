@@ -7,6 +7,8 @@ const db = require('./database/index');
 const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 // Initialize the app
 let app = express();
@@ -17,6 +19,7 @@ app.use(helmet.frameguard());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api', apiRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 if (app.get('env') === 'production') {
     app.use(logger('combined'));
