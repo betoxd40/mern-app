@@ -1,6 +1,4 @@
-import { get } from '../../config/default.json';
-
-const GA_KEY = get('googleKeys');
+const GA_KEY = 'AIzaSyBRc0hU3-fbV5xAHnEc-PxK-cHIVZaMWkg';
 
 const GA_SCRIPT = `https://maps.googleapis.com/maps/api/js?key=${GA_KEY}&libraries=places`;
 
