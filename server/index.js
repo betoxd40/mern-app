@@ -9,6 +9,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const os = require('os');
+const v8 = require('v8');
+const pkg = require('../package.json');
 
 // Initialize the app
 let app = express();
@@ -20,6 +23,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api', apiRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get('/health', async (req, res, next) => {
+    res.json({
+        name: process.name,
+        nodeVersion: process.versions.node,
+        envMode: process.env.NODE_ENV || null,
+        memoryUsage: process.memoryUsage(),
+        upTime: process.uptime(),
+        totalMem: os.totalmem(),
+        freeMem: os.freemem(),
+        loadAvg: os.loadavg(),
+        heap: v8.getHeapStatistics(),
+        host: os.hostname(),
+        packageJSON: pkg.version
+    });
+});
 
 if (app.get('env') === 'production') {
     app.use(logger('combined'));

@@ -11,6 +11,10 @@
     {
       "name": "Order",
       "description": "Everything about your orders"
+    },
+    {
+      "name": "Health",
+      "description": "Check your API memory consume"
     }
   ],
   "schemes": [
@@ -18,10 +22,26 @@
     "http"
   ],
   "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
     "/order": {
       "get": {
         "tags": [
-          "order"
+          "Order"
         ],
         "summary": "Find all the orders",
         "description": "Returns all the orders",
@@ -48,10 +68,11 @@
       },
       "post": {
         "tags": [
-          "order"
+          "Order"
         ],
         "summary": "Add a new order to the restaurant",
         "description": "",
+        "operationId": "addPet",
         "consumes": [
           "application/json"
         ],
