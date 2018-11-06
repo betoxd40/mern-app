@@ -1,10 +1,22 @@
 ## What do you need or have installed before starting the project?
 
-### `mongoDB` 
+### `mongoDB`
 ### `Google Maps API Key`
-You can put it here -> src/utils/loadGoogleMapsScript.js
+You can put it here -> `src/utils/loadGoogleMapsScript.js`
 ### `Google Matrix API Key` 
-You can put it here -> server/utils/maps.js
+You can put it here -> `config/default.json`
+
+## Steps to run the project
+- Run Mongod in your console
+- Execute `yarn start`
+- Make sure you have all the apiKeys in place
+- Congratulations, everything should be fine! Enjoy it.
+
+## Available Routes for Server
+- /order -> API
+- /health -> Memory consumption
+- /api-docs -> Swagger API docs
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -50,11 +62,3 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-
-## Installed packages
-
-- MaterialUI
-- Cors (to test the server without going through the cors)
-- React, Redux, Redux-Saga, PropTypes.
-- react-places-autocomplete, npm package automatically connected to the api of goole maps
