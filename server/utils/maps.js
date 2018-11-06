@@ -1,6 +1,8 @@
 const axios = require('axios');
+const config = require('config');
 
-const apiKey = 'AIzaSyBL_cJazufR-tcFeYMmFpCK7iSC1nmw-vU';
+const apiKey = config.get('googleKeys.matrix');
+
 const baseURL = 'https://maps.googleapis.com/maps/api';
 // This current location is for restaurant location
 const currentLocation = '-34.5974917,-58.4225502';

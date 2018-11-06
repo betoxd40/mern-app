@@ -5,5 +5,9 @@
       "host": "localhost",
       "port": 27017,
       "dbName": "testDatabase"
+    },
+    "googleKeys": {
+      "matrix": "AIzaSyBL_cJazufR-tcFeYMmFpCK7iSC1nmw-vU",
+      "maps": "AIzaSyBRc0hU3-fbV5xAHnEc-PxK-cHIVZaMWkg"
     }
   }

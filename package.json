@@ -24,11 +24,14 @@
     "redux-saga": "^0.16.2",
     "swagger-ui-express": "^4.0.1"
   },
+  "engines": {
+    "node": "11.0.0",
+    "npm": "6.4.1"
+  },
   "scripts": {
     "start-server": "node server/index",
     "start-client": "react-scripts start",
-    "database-init": "mongod",
-    "start": "concurrently --kill-others-on-fail \"yarn database-init\" \"yarn start-server\" \"yarn start-client\"",
+    "start": "concurrently --kill-others-on-fail \"yarn start-server\" \"yarn start-client\"",
     "build": "REACT_APP_API_URL=apiProdUrl react-scripts build",
     "test-client": "react-scripts test --verbose",
     "test-server": "mocha server/controllers/**/*.* --timeout 10000",

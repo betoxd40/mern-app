@@ -29,7 +29,7 @@ exports.new = async (req, res) => {
         res.status(400).json({
             success: false,
             message: 'Bad request data',
-            error: error,
+            error: error.details.shift().message,
         });
     }
     const order = new Order();
@@ -47,7 +47,7 @@ exports.new = async (req, res) => {
             res.status(400)
                 .json({
                     success: false,
-                    message: 'You should check your api key'
+                    message: 'You should check your api key',
                 });
         } else {
             res.status(200)

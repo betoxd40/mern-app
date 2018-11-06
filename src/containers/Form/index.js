@@ -34,7 +34,7 @@ class Form extends React.Component {
     };
 
     componentDidCatch(error, info) {
-        this.setState({ error, info });
+        this.setState({ error: info });
     }
 
     handleSelect = address => {
