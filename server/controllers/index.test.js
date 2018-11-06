@@ -17,8 +17,8 @@ const mockData = {
     email: 'test',
     address: 'test',
     location: {
-        lat: '-34.5995939',
-        lng: '-58.3805763'
+        lat: -34.5995939,
+        lng: -58.3805763
     }
 };
 

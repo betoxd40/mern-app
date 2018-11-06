@@ -12,8 +12,8 @@ const validateResponseData = dataBody => {
         email: Joi.string().required(),
         address: Joi.string().required(),
         location: Joi.object().keys({
-            lat: Joi.string().required(),
-            lng: Joi.string().required(),
+            lat: Joi.number().required(),
+            lng: Joi.number().required(),
         }).required(),
     });
     const { error } = Joi.validate(dataBody, schema);
