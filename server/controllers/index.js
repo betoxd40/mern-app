@@ -1,6 +1,5 @@
 const Order = require('../models/index');
 const getETA = require('../utils/maps');
-const Joi = require('joi');
 const validateResponseData = require('../utils/validators');
 
 // Handle index actions

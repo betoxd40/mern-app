@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from '@material-ui/core/Input';
+import NumberFormat from 'react-number-format';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -31,12 +32,37 @@ class Form extends React.Component {
         addressRequired : false,
         showNoSelectedCheckboxError : false,
         showNoSelectedFromDropdown : false,
+        showEmailIsNotValid : false,
         error: null,
     };
 
     componentDidCatch(error, info) {
         this.setState({ error: info });
     }
+    NumberFormatCustom = props => {
+        const { inputRef, onChange, ...other } = props;
+        return (
+            <NumberFormat
+                {...other}
+                getInputRef={inputRef}
+                format="## #### ####"
+                onValueChange={values => {
+                    onChange({
+                        target: {
+                            value: values.value,
+                        },
+                    });
+                }}
+            />
+        );
+    };
+
+    checkEmailIsValid = email => {
+        const regex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const res =  regex.test(String(email).toLowerCase());
+        console.log(res);
+        return res;
+    };
 
     handleSelect = address => {
         this.props.actions.changeAddress(address);
@@ -92,10 +118,15 @@ class Form extends React.Component {
         } else {
             this.setState({ showNoSelectedFromDropdown: false })
         };
+        if ( !this.checkEmailIsValid(this.props.email) ) {
+            this.setState({ showEmailIsNotValid: true })
+        } else {
+            this.setState({ showEmailIsNotValid: false })
+        };
     };
     checkRequired = () => {
         return this.props.email !== '' && this.props.name !== '' && this.props.lastName !== '' &&
-            this.props.address !== '' && this.props.number !== '' && this.props.totalCost !== 0 && this.props.location !== null;
+            this.props.address !== '' && this.props.number !== '' && this.props.totalCost !== 0 && this.props.location !== null &&  this.checkEmailIsValid(this.props.email);
 
     };
     buildOrder = () => {
@@ -159,7 +190,6 @@ class Form extends React.Component {
                             required
                             onChange= { event => this.props.actions.handleChange( { name: 'name', value: event.target.value, } ) }
                         />
-                        {}
                     </Grid>
                     <Grid item xs={6}>
                         <Input
@@ -181,6 +211,7 @@ class Form extends React.Component {
                             fullWidth={true}
                             required
                             onChange= { event => this.props.actions.handleChange( { name: 'number', value: event.target.value, } ) }
+                            inputComponent={this.NumberFormatCustom}
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -193,6 +224,10 @@ class Form extends React.Component {
                             required
                             onChange= { event => this.props.actions.handleChange( { name: 'email', value: event.target.value, } ) }
                         />
+                        {this.state.showEmailIsNotValid &&
+                        <span className={'error-text'}>
+                            Please enter an email valid
+                        </span>}
                     </Grid>
                     <Grid item xs={12}>
                         <PlacesAutocomplete
